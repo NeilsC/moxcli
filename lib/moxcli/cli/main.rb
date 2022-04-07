@@ -27,6 +27,7 @@ module Moxcli
         puts acct.deck_names
       end
 
+      option :overwrite, type: :boolean, default: false
       desc "export-decks", "Exports all of your decks as text files in the specified folder"
       def export_decks(folder)
         if !Dir.exist?(folder)
@@ -34,7 +35,7 @@ module Moxcli
           exit 1
         end
 
-        if !Dir.empty?(folder)
+        if !options[:overwrite] && !Dir.empty?(folder)
           puts "directory is not empty"
           exit 1
         end

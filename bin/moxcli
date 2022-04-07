@@ -4,4 +4,7 @@
 require "bundler/setup"
 require "moxcli"
 
-Moxcli::CLI.start(ARGV)
+require "zeitwerk"
+Zeitwerk::Loader.eager_load_all
+
+Moxcli::CLI::Main.start(ARGV)

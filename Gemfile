@@ -15,3 +15,9 @@ gem "rubocop-rspec", require: false
 gem "http", "~> 5.0"
 
 gem "pry"
+
+gem "awesome_print"
+
+gem "zeitwerk"
+
+gem "debug"

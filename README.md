@@ -6,6 +6,10 @@ It is developed using Ruby.
 
 I welcome any feature requests or bug reports! Please submit an issue [here](https://github.com/NeilsC/moxcli/issues).
 
+## Features
+
+Moxcli just has some basic features at the moment. It can output a list of your decks, export the contents of a single (public) deck, or export the contents of all of your decks into text files. See the Usage section below for details.
+
 ## Installation
 
 Eventually I'd like to make installation easier, but for now there are some manual steps involved.
@@ -23,8 +27,6 @@ Configure moxcli with your account info:
     $ bin/moxcli config
 
 ## Usage
-
-Moxcli just has some basic features at the moment. It can output a list of your decks, export the contents of a single (public) deck, or export the contents of all of your decks into text files.
 
 Output contents of a single deck. You must specify the deck's public ID (you can find this in the deck's Moxfield URL):
 

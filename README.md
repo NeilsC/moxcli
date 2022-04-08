@@ -4,17 +4,39 @@ moxcli is a command line interface to [Moxfield](https://www.moxfield.com), the 
 
 It is developed using Ruby.
 
+I welcome any feature requests or bug reports! Please submit an issue [here](https://github.com/NeilsC/moxcli/issues).
+
 ## Installation
+
+Eventually I'd like to make installation easier, but for now there are some manual steps involved.
 
 moxcli requires [Ruby](https://www.ruby-lang.org/en/) to run. It is developed and tested using version 3.1.1. Ruby installation is platform-dependent. Here is a [guide](https://www.ruby-lang.org/en/documentation/installation/) to get you started.
 
-Once you have Ruby installed, fire up your terminal and install it:
+Once you have Ruby installed, use `git` to clone this repository. In the repository folder on your system do the following:
 
-    $ gem install moxcli
+Run bundler to install moxcli dependencies:
+
+    $ bundle install
+
+Configure moxcli with your account info:
+
+    $ bin/moxcli config
 
 ## Usage
 
-TODO: Write usage instructions here
+Moxcli just has some basic features at the moment. It can output a list of your decks, export the contents of a single (public) deck, or export the contents of all of your decks into text files.
+
+Output contents of a single deck. You must specify the deck's public ID (you can find this in the deck's Moxfield URL):
+
+    $ bin/moxcli get-deck "IzdWDH5u8EOmIeQ8fzriJw"
+
+Output a list of your decks:
+
+    $ bin/moxcli list-decks
+
+Export the current contents of all of your decks.
+
+    $ bin/moxcli export-decks EXPORT_PATH
 
 ## Development
 

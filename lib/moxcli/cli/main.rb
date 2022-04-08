@@ -28,24 +28,44 @@ module Moxcli
       end
 
       option :overwrite, type: :boolean, default: false
+      option :create_folder, type: :boolean, default: false
       desc "export-decks", "Exports all of your decks as text files in the specified folder"
       def export_decks(folder)
         if !Dir.exist?(folder)
-          puts "directory does not exist"
-          exit 1
+          if !options[:create_folder]
+            puts "Directory does not exist. Use --create-folder to have moxcli create it: #{folder}"
+            exit 1
+          else
+            Dir.mkdir(folder)
+          end
         end
 
         if !options[:overwrite] && !Dir.empty?(folder)
-          puts "directory is not empty"
+          puts "Directory is not empty. Use --overwrite to ignore this error."
           exit 1
         end
 
         acct = Moxfield::Account.current
-        acct.decks.each do |deck|
-          deck = Moxfield::Deck.new(deck["publicId"])
+        acct.decks.each do |deck_info|
+          puts "Exporting deck: #{deck_info["name"]}"
+          deck = Moxfield::Deck.new(deck_info["publicId"])
+          deck_folder = deck_info.dig("folder", "name")
           file_name = "#{deck.name}.txt"
-          File.write(File.join(folder, file_name), deck.export)
+          if deck_folder
+            dest_folder = File.join(folder, safe_filesystem_name(deck_folder))
+            Dir.mkdir(dest_folder) if !Dir.exist?(dest_folder)
+          else
+            dest_folder = folder
+          end
+          file_name = File.join(dest_folder, safe_filesystem_name("#{deck.name}.txt"))
+          File.write(file_name, deck.export)
         end
+      end
+
+      private
+
+      def safe_filesystem_name(str)
+        str.gsub(/[^0-9a-zA-Z\-._]/, '_')
       end
     end
   end

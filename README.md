@@ -38,6 +38,10 @@ Export the current contents of all of your decks.
 
     $ bin/moxcli export-decks EXPORT_PATH
 
+`export-decks` has some options. CAUTION! This will overwrite existing files in the target folder:
+
+    $ bin/moxcli export-decks ~/moxfield_decks --overwrite --create-folder
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

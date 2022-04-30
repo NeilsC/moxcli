@@ -29,6 +29,7 @@ module Moxcli
             response.parse
           else
             warn "Moxfield token refresh failed. Reason: #{response.reason}"
+            warn "Running `moxcli config` should fix this."
             raise Error, "Token refresh failed"
           end
         end

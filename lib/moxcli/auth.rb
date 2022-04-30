@@ -13,6 +13,9 @@ module Moxcli
       end
 
       @@latest_token["access_token"]
+    rescue Moxfield::API::Error
+      warn "Aborting due to error."
+      exit 1
     end
 
     def self.write_token(token)
@@ -23,7 +26,7 @@ module Moxcli
       @@latest_token = JSON.parse(File.read(TOKEN_PATH))
       @@latest_token
     rescue Errno::ENOENT
-      puts "Couldn't read auth token from file. Running `moxcli config` again should fix this"
+      warn "Couldn't read auth token from file. Running `moxcli config` again should fix this"
       raise
     end
 

@@ -4,6 +4,10 @@ module Moxcli
   module CLI
     # Moxcli CLI
     class Main < Thor
+      def self.exit_on_failure?
+        true
+      end
+
       desc "config", "Configure Moxcli"
       def config
         print "Moxfield user name: "
@@ -29,7 +33,7 @@ module Moxcli
 
       option :overwrite, type: :boolean, default: false
       option :create_folder, type: :boolean, default: false
-      desc "export-decks", "Exports all of your decks as text files in the specified folder"
+      desc "export-decks FOLDER", "Exports all of your decks as text files in FOLDER"
       def export_decks(folder)
         if !Dir.exist?(folder)
           if !options[:create_folder]
@@ -47,6 +51,11 @@ module Moxcli
 
         acct = Moxfield::Account.current
         acct.decks.each do |deck_info|
+          if deck_info["visibility"] == "private"
+            puts "Skipping private deck: #{deck_info["name"]}"
+            next
+          end
+
           puts "Exporting deck: #{deck_info["name"]}"
           deck = Moxfield::Deck.new(deck_info["publicId"])
           deck_folder = deck_info.dig("folder", "name")
@@ -65,7 +74,7 @@ module Moxcli
       private
 
       def safe_filesystem_name(str)
-        str.gsub(/[^0-9a-zA-Z\-._]/, '_')
+        str.gsub(/[^0-9a-zA-Z\-._\/]/, '_')
       end
     end
   end
